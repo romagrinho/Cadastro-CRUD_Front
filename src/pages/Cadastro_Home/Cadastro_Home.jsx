@@ -35,26 +35,35 @@ function Cadastro_Home() {
     }, [])
 
     return (
-        <div className="cadastro-home">
-            <form className="cadastro-form">
-                <h1>Cadastro de Usuários</h1>
-                <input name="nome" type="text" placeholder="Nome Completo" required ref={inputName} />
-                <input name="idade" type="number" placeholder="Idade" required ref={inputAge} />
-                <input name="email" type="email" placeholder="Email" required ref={inputEmail} />
-                <button type="button" onClick={createUsers}>Cadastrar</button>
-            </form>
-
-            {users.map(user => (<div className="card_user">
-                <div key={user.id}>
-                    <p placeholder="Nome">Nome:  <span>{user.name}</span></p>
-                    <p placeholder="Idade">Idade: <span>{user.age}</span></p>
-                    <p placeholder="Email">Email: <span>{user.email}</span></p>
+        <div className={`container ${users.length === 0 ? 'centralizado' : ''}`}>
+            <div className="cadastro-home">
+                <form className="cadastro-form">
+                    <h1>Cadastro de Usuários</h1>
+                    <input name="nome" type="text" placeholder="Nome Completo" required ref={inputName} />
+                    <input name="idade" type="number" placeholder="Idade" required ref={inputAge} />
+                    <input name="email" type="email" placeholder="Email" required ref={inputEmail} />
+                    <button type="button" onClick={createUsers}>Cadastrar</button>
+                </form>
+            </div>
+        {users.length > 0 && (
+                <div className="container_cards">
+                    {users.map(user => (
+                        <div key={user.id} className="card_user">
+                            <div>
+                                <p>Nome: <span>{user.name}</span></p>
+                                <p>Idade: <span>{user.age}</span></p>
+                                <p>Email: <span>{user.email}</span></p>
+                            </div>
+                            <button className="btn_trash" onClick={() => deleteUsers(user.id)}>
+                                <img className="trash-icon" src={Trash} alt="Trash" />
+                            </button>
+                        </div>
+                    ))}
                 </div>
-                <button className="btn_trash" onClick={() => deleteUsers(user.id)}>
-                    <img className="trash-icon" src={Trash} alt="Trash" />
-                </button>
-            </div>))}
+            )}
+            
         </div>
+
     )
 }
 
